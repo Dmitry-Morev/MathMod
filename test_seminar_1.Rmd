@@ -1,0 +1,5 @@
+plot(density(rnorm(100)),col="red")
+x=5
+x<-5
+assign("x",5)
+x
