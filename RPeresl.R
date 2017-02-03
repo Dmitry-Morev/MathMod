@@ -1,0 +1,16 @@
+rm(list=ls())
+library(aqp)
+library(scales)
+library(RColorBrewer)
+setwd("G:/OneDrive/R/R_data")
+dat=read.table("Druzhba.csv", header=T, sep=";", dec=",")
+dat$soil_color=with(dat,munsell2rgb(hue, value, chroma))
+depths(dat)=ID~Top+Bottom
+site(dat)=~elevation
+print(dat)
+plotSPC(dat, name='Name', cex.names = 1, plot.order = c(1:5,10,9,8,7,6))
+abline(v=1:length(dat),lty=3,col='red')
+axis(1,line=0, at=c(1:5,10,9,8,7,6), labels=dat$elevation, cex.axis=0.75, font=3, col='red', col.axis='blue', lwd=2)
+mtext('Расстояние между точками, м', side=1, line=2, font=3, col='black')
+axis(2,line=-1, at=pretty(1:max(dat)), cex.axis=0.75, font=3, col='red', col.axis='blue', lwd=2)
+mtext('Мощность горизонтов,см', side=2, line=1, font=3, col='black')
