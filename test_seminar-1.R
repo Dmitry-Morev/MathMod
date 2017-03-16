@@ -1,22 +1,30 @@
-plot(density(rnorm(100)),col="red")
-x=5
-x<-5
-assign("x",5)
-x
-x<-c(1,3,6,7)
-x
-char<-c("8","edge","turn8k")
-char
-logic<-c(TRUE,FALSE,TRUE,FALSE)
-logic
-dynam<-c(8,"dds", TRUE)
-dynam<-c(1,0,1,1,TRUE)
-dynam
-log(x,10)
-x=10/(5-5)
-x
-x<-c(-10,2,78,34,-98,23,0,-8)
-order(x)
-sort(x)
-sort(x) == x[order(x)]
-getwd()
+#Задача 1 - расчёт средних по столбцам
+zan1 = list(mean(iris$Sepal.Length),mean(iris$Sepal.Width), mean(iris$Petal.Length), mean(iris$Petal.Width)); 
+names(zan1)=c("Длина чашелистиков","Ширина Чашелистиков", "длина лепестков", "ширина лепестков"); zan1
+#Задача 2
+y=c()
+for(i in 1:150)
+{x=sum(iris[i,1:4])/4
+y=c(x,y)
+}
+y
+#Задача 3 - формирование последовательности из 1000 нуклеотидов и расчет долевого участия "А" и "Т"
+DNA = sample((factor(rep(c("A","G","C","T"),c(1,1,1,1)))), size = 1000, replace = T); DNA
+dna_at=c(summary(DNA)[c("A","T")], summary(DNA)["A"]/length(DNA), summary(DNA)["T"]/length(DNA))
+#Задача 4 - вектор с 10000 буквами и подсчёт гласных
+ABC = sample(letters, size = 10000, replace = T);ABC
+Gl=0
+for(i in 1:length(ABC))
+{if (ABC[i]=="a"|ABC[i]=="e"|ABC[i]=="i"|ABC[i]=="o"|ABC[i]=="u"|ABC[i]=="y") {Gl=Gl+1} else {Gl=Gl+0}}
+Gl
+#Задача 5 - #Отсортируйте все виды в таблице iris по средней длинне лепестков.
+#Результат должен быть фактором с градациями в виде имен видов с правильной последовательностью уровней. 
+levels(iris$Species) = names(sort(tapply(iris$Petal.Length, iris$Species, mean)))
+#Задача 6 функция для расчета медианы
+med=function(p)
+{sort(p)
+  return(p[(round(length(p)/2))])}
+#Задача 7 Построить график зависимости для таблицы Ирисов
+ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, col = Species)) + geom_point(alpha = 0.4)
+#Задача 8 
+tapply(diamonds$price[diamonds$price >1000], diamonds$clarity[diamonds$price >1000], mean
