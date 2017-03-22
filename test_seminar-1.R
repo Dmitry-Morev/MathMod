@@ -34,7 +34,7 @@ levels(iris$Species) = names(sort(tapply(iris$Petal.Length, iris$Species, mean))
         return(med)
   }
 #Задача 7 Построить график зависимости для таблицы Ирисов
-ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, col = Species)) + geom_point(alpha = 0.4)
+ggplot(data = iris, aes(x=Sepal.Length, y = Petal.Length )) + geom_point( )+facet_grid(. ~ Species)
 #Задача 8 
 tapply(diamonds$price[diamonds$price >1000], diamonds$clarity[diamonds$price >1000], mean
 #Задача 9
