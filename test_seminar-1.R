@@ -28,3 +28,15 @@ med=function(p)
 ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, col = Species)) + geom_point(alpha = 0.4)
 #Задача 8 
 tapply(diamonds$price[diamonds$price >1000], diamonds$clarity[diamonds$price >1000], mean
+#Задача 9
+spir_cor = function(vec1, vec2)
+  {
+  vec1 = rank(vec1)
+  vec2 = rank(vec2)
+  delta = vec1 - vec2
+  delta2 = delta^2
+  sumsq = sum(delta2)
+  r = 1 - ((6*sumsq)/(length(delta2)*(length(delta2)^2 - 1)))
+  print("Коэф.кор.Спирмена")
+  return(r)
+}
