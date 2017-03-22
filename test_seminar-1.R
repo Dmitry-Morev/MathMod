@@ -40,3 +40,20 @@ spir_cor = function(vec1, vec2)
   print("Коэф.кор.Спирмена")
   return(r)
 }
+#Задача 10. Линейная регрессия
+Eddy = read.csv("eddypro.csv", header = T, dec = ".", sep = ",")
+Eddy[Eddy == -9999] = NA
+Eddy[Eddy == -9999.0] = NA
+Eddy[,c(1,5,6,7,24,25,26, 32,33, 37, 38, 63, 70, 88:100)] = NULL
+Eddy[,c(80:88)]=NULL
+Eddy_red = subset(Eddy, DOY > 151 & DOY <243)
+Eddy_red[,c(1,2)]=NULL
+names(Eddy_red)
+trend <- as.formula(paste("co2_flux~", paste(names(Eddy_red)[c(1:10,12:94)], collapse = "+")))
+trend
+fit <- lm(trend, data = Eddy_red)
+summary(fit)
+step = stepAIC(fit, direction = "forward")
+summary(step)
+round(cor(Eddy_red),2)
+anova(step)
