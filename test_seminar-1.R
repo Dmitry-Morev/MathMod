@@ -21,9 +21,18 @@ Gl
 #Результат должен быть фактором с градациями в виде имен видов с правильной последовательностью уровней. 
 levels(iris$Species) = names(sort(tapply(iris$Petal.Length, iris$Species, mean)))
 #Задача 6 функция для расчета медианы
-med=function(p)
-{sort(p)
-  return(p[(round(length(p)/2))])}
+  med = function(vector) 
+    {l = length(vector)
+    vector = sort(vector)
+    nechetnost = (round((l/2),0)-l/2)
+    med=0
+    if (nechetnost == 0) {
+      med = mean(c(vector[round((l/2),0)],vector[round((l/2),0)+1 ]))
+    } else {
+      med = vector[round((l/2),0)]
+    }
+        return(med)
+  }
 #Задача 7 Построить график зависимости для таблицы Ирисов
 ggplot(iris, aes(x = Petal.Length, y = Sepal.Length, col = Species)) + geom_point(alpha = 0.4)
 #Задача 8 
