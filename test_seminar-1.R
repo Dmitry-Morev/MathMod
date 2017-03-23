@@ -50,14 +50,20 @@ spir_cor = function(vec1, vec2)
   return(r)
 }
 #Задача 10. Линейная регрессия
-Eddy = read.csv("eddypro.csv", header = T, dec = ".", sep = ",")
+Eddy = read.csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1", skip = 1, header = T, dec = ".", sep = ",")
+nEddy = names(Eddy)
+Eddy = read.csv("https://www.dropbox.com/s/erhs9hoj4vhrz0b/eddypro.csv?dl=1", skip = 3, header = F, dec = ".", sep = ",")
+names(Eddy) = nEddy
 Eddy[Eddy == -9999] = NA
 Eddy[Eddy == -9999.0] = NA
 Eddy[,c(1,5,6,7,24,25,26, 32,33, 37, 38, 63, 70, 88:100)] = NULL
 Eddy[,c(80:88)]=NULL
 Eddy_red = subset(Eddy, DOY > 151 & DOY <243)
 Eddy_red[,c(1,2)]=NULL
-names(Eddy_red)
+class(Eddy_red)
+NA_check = function(x)
+{ if (is.na(x)) {return(FALSE)} else {return(TRUE)}}
+stroki = apply(Eddy_red, 1, NA_check) 
 trend <- as.formula(paste("co2_flux~", paste(names(Eddy_red)[c(1:10,12:94)], collapse = "+")))
 trend
 fit <- lm(trend, data = Eddy_red)
