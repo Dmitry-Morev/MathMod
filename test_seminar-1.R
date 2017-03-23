@@ -66,19 +66,15 @@ NA_check = function(x)
 stroki = apply(Eddy_red, 1, NA_check) 
 Eddy_red = Eddy_red[stroki,]
 #Подготовка таблицы для корреляции завершена
-cor.frame = cor(Eddy_red, Eddy_red$co2_flux)
-n2 = data.frame(cor.frame, row.names = row.names(cor.frame))
-
-trend1 <- as.formula(paste("co2_flux~", paste(names(Eddy_red)[c(1:10,12:94)], collapse = "+")))
-model1 <- lm(trend1, data = Eddy_red)
-znach_vars1 = names(summary(model1)$coefficients[summary(model1)$coefficients[,4]<0.05,4])
-model2 = lm(as.formula(paste("co2_flux~",paste(znach_vars1, collapse = "+"),sep="")), data = Eddy_red)
-znach_vars2 = names(summary(model2)$coefficients[summary(model2)$coefficients[,4]<0.05,4])
-model3 = lm(as.formula(paste("co2_flux~",paste(znach_vars2, collapse = "+"),sep="")), data = Eddy_red)
-znach_vars3 = names(summary(model3)$coefficients[summary(model3)$coefficients[,4]<0.05,4])
-model4 = lm(as.formula(paste("co2_flux~",paste(znach_vars3, collapse = "+"),sep="")), data = Eddy_red)
-anova(model3, model4)
-Eddy_red2 = Eddy_red[, znach_vars3]
-cor_vars = round(cor(Eddy_red2),2)
-cor_test = cor_vars > abs(0.8)
-Eddy_red3 = Eddy_red2[, c(-18, -20, -21, -26, -3)]
+cor.frame = cor(Eddy_red$co2_flux, Eddy_red)
+n2 = as.data.frame(cor.frame)
+cor.names = names(n2[, abs(n2) > 0.4])
+arg1 = sort(cor.names)[-1]
+model1 = lm(as.formula(paste("co2_flux~",paste(arg1, collapse = "+"),sep="")), data = Eddy)
+arg2 = names(summary(model1)$coefficients[summary(model1)$coefficients[,4]<0.05,4])
+model2 = lm(as.formula(paste("co2_flux~",paste(arg2, collapse = "+"),sep="")), data = Eddy)
+library(MASS) 
+AIC(model1, model2)
+BIC(model1, model2)
+fin_table = Eddy_red[arg2]
+colinear = cor(fin_table)
