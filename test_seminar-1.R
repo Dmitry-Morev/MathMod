@@ -78,3 +78,4 @@ AIC(model1, model2)
 BIC(model1, model2)
 fin_table = Eddy_red[arg2]
 colinear = cor(fin_table)
+col_1 = abs(colinear) > 0.78
