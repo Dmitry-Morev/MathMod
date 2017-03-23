@@ -62,13 +62,16 @@ Eddy_red = subset(Eddy, DOY > 151 & DOY <243)
 Eddy_red[,c(1,2)]=NULL
 class(Eddy_red)
 NA_check = function(x)
-{ if (is.na(x)) {return(FALSE)} else {return(TRUE)}}
+{ if (any(is.na(x))) {return(FALSE)} else {return(TRUE)}}
 stroki = apply(Eddy_red, 1, NA_check) 
+Eddy_red = Eddy_red[stroki,]
 trend <- as.formula(paste("co2_flux~", paste(names(Eddy_red)[c(1:10,12:94)], collapse = "+")))
-trend
-fit <- lm(trend, data = Eddy_red)
-summary(fit)
+model1 <- lm(trend, data = Eddy_red)
+znach_vars = names(p_zn$coefficients[p_zn$coefficients[,4]<0.05,4])
+model2 = lm(as.formula(paste("co2_flux~",paste(znach_vars, collapse = "+"),sep="")), data = Eddy_red)
+p_zn = summary(fit)
 step = stepAIC(fit, direction = "forward")
 summary(step)
 round(cor(Eddy_red),2)
 anova(step)
+
